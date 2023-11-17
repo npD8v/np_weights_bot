@@ -56,7 +56,7 @@ server.on('listening', async () => {
         }
 
     } else {
-        url = 'https://online-url'
+        url = 'https://bot-np-weights-cameras.onrender.com'
     }
     console.log('URL', url);
 })
