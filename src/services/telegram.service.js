@@ -16,8 +16,23 @@ class TelegramService {
         }
     });
   }
+
   async sendMessageWithPictures(body, headers) {
     return telegramHelper.callAPI('sendMediaGroup', body, headers);
   }
+
+  async sendMessage(chat_id,  text) { 
+        return telegramHelper.callAPI('sendMessage', {
+        chat_id,
+        text,
+    });
+  }
+  
+  async deleteMessage(chat_id,  message_id) { 
+    return telegramHelper.callAPI('deleteMessage', {
+    chat_id,
+    message_id,
+});
+}
 }
 module.exports = new TelegramService();

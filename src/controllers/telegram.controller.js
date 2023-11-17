@@ -11,37 +11,46 @@ class TelegramController {
     async invokeKeyboardMainMenu(req, res, next) {
         const { message } = req?.body;
         const chatId = message?.chat?.id;
-        const messageText = `Lorem ipsum`;
-        const buttonsText = {
-            weight1: `weight1`,
-            weight2: `weight2`,
-            weight3: `weight3`,
-
-        };
+        const messageText = `Щоб розпочати роботу з ботом - натисніть на кнопку з номером вагового терміналу стан якого ви бажаєте перевірити.`;
         try {
-            await telegramService.invokeKeyboardMenu(chatId,
-                {
-                    text: messageText,
-                    keyboard: [
-                        [{ text: buttonsText.weight1 }, { text: buttonsText.weight2 }, { text: buttonsText.weight3 }],
-                    ],
-                })
+            await telegramService.invokeKeyboardMenu(chatId, {
+                text: messageText,
+                keyboard: [
+                    [{ text: "Вагова 1" }, { text: "Вагова 2" }],
+                    [{ text: "Вагова 3" }, { text: "Вагова 4" }]
+                ],
+            })
+            await telegramService.deleteMessage(chatId, message.message_id);
         } catch (err) {
-            next(err);
+            await telegramService.sendMessage(chatId, err.message);
+            await telegramService.deleteMessage(chatId, message.message_id);
+            console.log(err);
         }
     }
-
 
     async sendWeightState(req, res, next) {
         const { message } = req?.body;
         const chatId = message?.chat?.id;
 
-       const {body, headers} = await constructPostBody(chatId, snapshotsMapper[message.text]);
+        const weightIdentifier = `weight${message.text.split(' ')[1]}`;
+
+        const messageMapper = {
+            weight1: 'Вагова 1 (Перший двір)',
+            weight2: 'Вагова 2 (Центральна права)',
+            weight3: 'Вагова 3 (Центральна ліва)',
+            weight4: 'Вагова 4 (Рендеринг)'
+        };
+
 
         try{
+            const {body, headers} = await constructPostBody(chatId, snapshotsMapper[weightIdentifier]);
             await telegramService.sendMessageWithPictures(body, headers);
+            await telegramService.sendMessage(chatId, `${messageMapper[weightIdentifier]}`);
+            await telegramService.deleteMessage(chatId, message.message_id);
         } catch (err) {
-            next(err);
+            await telegramService.sendMessage(chatId, err.message);
+            await telegramService.deleteMessage(chatId, message.message_id);
+            console.log(err);
         }
     }
 }
