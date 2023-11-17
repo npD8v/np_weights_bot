@@ -1,0 +1,5 @@
+.env
+ngrok.exe
+url.txt
+
+node_modules/
