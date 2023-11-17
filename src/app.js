@@ -14,7 +14,7 @@ const app = express();
 
 const server = http.createServer(app);
 
-const {PORT, NGROK_PORT} = process.env;
+const {PORT, NGROK_PORT, SERVER_URL} = process.env;
 
 const port = PORT || 3000;
 
@@ -56,8 +56,7 @@ server.on('listening', async () => {
         }
 
     } else {
-        url = 'https://bot-np-weights-cameras.onrender.com';
-        await telegramService.setWebhook(`${url}/api`);
+        await telegramService.setWebhook(`${SERVER_URL}/api`);
     }
     console.log('URL', url);
 })
