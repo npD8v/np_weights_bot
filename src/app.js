@@ -56,7 +56,8 @@ server.on('listening', async () => {
         }
 
     } else {
-        url = 'https://bot-np-weights-cameras.onrender.com/api'
+        url = 'https://bot-np-weights-cameras.onrender.com';
+        await telegramService.setWebhook(`${url}/api`);
     }
     console.log('URL', url);
 })
