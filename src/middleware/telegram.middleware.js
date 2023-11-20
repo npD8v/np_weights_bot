@@ -8,8 +8,15 @@ const _controllersMap = {
 }
 
 exports.callController = async (req, res, next) => {
-  const key = req?.body?.message?.text?.replace('/', '').replace(' ', '_').toLowerCase();
-  console.log('Current command: ', key)
-  await _controllersMap[key]?.(req, res, next);
+  if(req.body.message){
+    const key = req.body.message.text.replace('/', '').replace(' ', '_').toLowerCase();
+    console.log('Current command: ', key)
+    if(Object.keys(_controllersMap).includes(key)){
+      await _controllersMap[key](req, res, next);
+    } else {
+      const chatId = req.body.message.chat_id;
+      await telegramController.sendDecliningMessage(req, res,next)
+    }
+  }
   res.status(200).json({});
 };

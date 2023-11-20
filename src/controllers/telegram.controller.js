@@ -9,9 +9,9 @@ const { IMAGES_FOLDER } = process.env;
 
 class TelegramController {
     async invokeKeyboardMainMenu(req, res, next) {
-        const { message } = req?.body;
-        const chatId = message?.chat?.id;
-        const messageText = `Щоб розпочати роботу з ботом - натисніть на кнопку з номером вагового терміналу стан якого ви бажаєте перевірити.`;
+        const { message } = req.body;
+        const chatId = message.chat.id;
+        const messageText = `Привіт👋 Я готовий до роботи!\n⬇Для початку оберіть ваговоий термінал з меню.⬇`;
         try {
             await telegramService.invokeKeyboardMenu(chatId, {
                 text: messageText,
@@ -26,6 +26,18 @@ class TelegramController {
         }
     }
 
+    async sendDecliningMessage(req, res,next) {
+        const { message } = req.body;
+        const chatId = message.chat.id;
+        const messageText = `Я покищо не знаю що таке "${message.text}"🤔\n⬇⬇⬇Спробуй обрати щось з меню⬇⬇⬇`;
+        try {
+            await telegramService.sendMessage(chatId, messageText);  
+        } catch (err) {
+            await telegramService.sendMessage(chatId, err.message);
+            await telegramService.deleteMessage(chatId, message.message_id); 
+        }
+    }
+
     async deleteMessage(chatId, messageId){
         try {
             await telegramService.deleteMessage(chatId, messageId);
@@ -35,8 +47,8 @@ class TelegramController {
     }
 
     async sendWeightState(req, res, next) {
-        const { message } = req?.body;
-        const chatId = message?.chat?.id;
+        const { message } = req.body;
+        const chatId = message.chat.id;
 
         const weightIdentifier = `weight${message.text.split(' ')[1]}`;
 

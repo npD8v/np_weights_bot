@@ -34,7 +34,7 @@ exports.constructPostBody = async (chatId, urls) => {
             },
         });
 
-        if (!response || response?.status !== 200) {
+        if (!response || response.status !== 200) {
             throw new Error(`Failed to retrieve image ${i + 1} from ${urls[i]} check IP and credentials`);
         }
 
