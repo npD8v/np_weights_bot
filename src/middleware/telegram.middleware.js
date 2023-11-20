@@ -9,7 +9,7 @@ const _controllersMap = {
 
 exports.callController = async (req, res, next) => {
   const key = req?.body?.message?.text?.replace('/', '').replace(' ', '_').toLowerCase();
-  console.log('Sent command: ', key)
+  console.log('Current command: ', key)
   await _controllersMap[key]?.(req, res, next);
   res.status(200).json({});
 };

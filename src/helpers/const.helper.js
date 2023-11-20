@@ -17,13 +17,16 @@ const {
     WEIGHT3_CAM3,
 
     WEIGHT4_CAM1,
-    WEIGHT4_CAM2
+    WEIGHT4_CAM2,
+
+    STREAMING_LOGIN,
+    STREAMING_PASSWORD_RENDERING
 } = process.env;
 
 exports.snapshotsMapper = {
     weight1: [constructCamUrl(WEIGHT1_CAM1), constructCamUrl(WEIGHT1_CAM2), constructCamUrl(WEIGHT1_CAM3)],
     weight2: [constructCamUrl(WEIGHT2_CAM1), constructCamUrl(WEIGHT2_CAM2), constructCamUrl(WEIGHT2_CAM3)],
     weight3: [constructCamUrl(WEIGHT3_CAM1), constructCamUrl(WEIGHT3_CAM2), constructCamUrl(WEIGHT3_CAM3)],
-    weight4: [constructCamUrl(WEIGHT4_CAM1), constructCamUrl(WEIGHT4_CAM2)], 
+    weight4: [constructCamUrl(WEIGHT4_CAM1, STREAMING_LOGIN, STREAMING_PASSWORD_RENDERING), constructCamUrl(WEIGHT4_CAM2, STREAMING_LOGIN, STREAMING_PASSWORD_RENDERING)], 
 }
 

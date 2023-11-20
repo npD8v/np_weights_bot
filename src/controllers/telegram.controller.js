@@ -23,8 +23,14 @@ class TelegramController {
             await telegramService.deleteMessage(chatId, message.message_id);
         } catch (err) {
             await telegramService.sendMessage(chatId, err.message);
-            await telegramService.deleteMessage(chatId, message.message_id);
-            console.log(err);
+        }
+    }
+
+    async deleteMessage(chatId, messageId){
+        try {
+            await telegramService.deleteMessage(chatId, messageId);
+        } catch (error) {
+            
         }
     }
 
@@ -49,8 +55,6 @@ class TelegramController {
             await telegramService.deleteMessage(chatId, message.message_id);
         } catch (err) {
             await telegramService.sendMessage(chatId, err.message);
-            await telegramService.deleteMessage(chatId, message.message_id);
-            console.log(err);
         }
     }
 }

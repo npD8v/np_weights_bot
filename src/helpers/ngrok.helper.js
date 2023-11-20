@@ -9,13 +9,8 @@ class Ngrok {
     }
 
     async getUrl(){
-        try{
-            const {data} = await axios.get(`${this.url}:${this.port}/api/tunnels`);
-            console.log(data);
-            return data?.tunnels?.find((object) => object.proto === 'https')?.public_url;
-        } catch (err) {
-            console.log(err);
-        }
+        const {data} = await axios.get(`${this.url}:${this.port}/api/tunnels`);
+        return data?.tunnels?.find((object) => object.proto === 'https')?.public_url;
     }
 }
 

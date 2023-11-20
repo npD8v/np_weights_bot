@@ -18,21 +18,21 @@ exports.constructPostBody = async (chatId, urls) => {
 
     for (let i = 0; i < urls.length; i++) {
         let response;
-        try{
-             response = await  axios.get(urls[i], {
-                responseType: 'arraybuffer',
-                headers: {
-                    'Content-Type': 'image/jpeg; charset=UTF-8',
-                },
-                auth: {
-                    username: STREAMING_LOGIN,
-                    password: STREAMING_PASSWORD,
-                },
-            });
-        }
-        catch(err){
-            console.log(err)
-        }
+        
+        const regex = /\/\/(.*?):(.*?)@/;
+        const match = urls[i].match(regex)
+
+        response = await  axios.get(urls[i], {
+            responseType: 'arraybuffer',
+            headers: {
+                'Content-Type': 'image/jpeg; charset=UTF-8',
+            },
+
+            auth: {
+                username: match[1],
+                password: match[2],
+            },
+        });
 
         if (!response || response?.status !== 200) {
             throw new Error(`Failed to retrieve image ${i + 1} from ${urls[i]} check IP and credentials`);
