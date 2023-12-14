@@ -1,8 +1,6 @@
 const axios = require("axios");
 const FormData = require('form-data');
 
-const {STREAMING_LOGIN, STREAMING_PASSWORD} = process.env;
-
 exports.constructPostBody = async (chatId, urls) => {
     const ipAddressRegex = /(?:[0-9]{1,3}\.){3}[0-9]{1,3}/g;
 

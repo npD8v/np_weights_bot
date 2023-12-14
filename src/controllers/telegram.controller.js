@@ -1,11 +1,6 @@
-const axios = require("axios");
-const FormData = require('form-data');
-
 const telegramService = require('../services/telegram.service');
 const { snapshotsMapper } = require('../helpers/const.helper');
-const { constructPostBody, cleanDirectory } = require('../helpers/axios.helper');
-
-const { IMAGES_FOLDER } = process.env;
+const { constructPostBody } = require('../helpers/axios.helper');
 
 class TelegramController {
     async invokeKeyboardMainMenu(req, res, next) {
