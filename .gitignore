@@ -1,7 +1,7 @@
 .env
 ngrok.exe
 url.txt
-start.sh
+start.bat
 
 
 node_modules/
